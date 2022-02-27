@@ -5,3 +5,5 @@
 3. Відкрити [посилання](https://russia-must-be-stopped-6mpfu.ondigitalocean.app/) в Tor Browser
 
 P.S. Вкладка має бути активна (інакше браузер може перестати надсилати запити)
+
+### [LitreevSays](https://t.me/litreevsays) організував акату [100 Gbps](https://t.me/litreevsays/4150) на ГосУслуги та запустив [КИБЕР-ЕЖА](https://cyber-yozh.com) приєднюємось!
