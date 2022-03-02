@@ -1,0 +1,43 @@
+.hidden {
+    display: none;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.buttons-block {
+    margin: 2rem 0 3rem;
+}
+
+.file-input {
+    padding: 0.7rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.btn-main {
+    width: 100%;
+    padding: 0.7rem;
+    font-size: 2rem;
+    text-transform: uppercase;
+    color: #fff;
+    cursor: pointer;
+}
+
+.btn-start {
+    background-color: green;
+}
+
+.btn-stop {
+    background-color: red;
+}
+
+.stats-table {
+    width: 100%;
+}
+
+.stats-table th, .stats-table td {
+    padding: .5rem;
+    text-align: left;
+}
